@@ -19,4 +19,13 @@ export const preloaderAssets = [{
 export const gameAssets = [{
   key: 'character',
   type: 'image'
-}];
+},
+{
+  key: 'bg-grid',
+  type: 'image'
+},
+{
+  key: 'bggradient',
+  type: 'image'
+}
+];

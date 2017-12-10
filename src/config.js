@@ -5,9 +5,11 @@
  * The game instance settings.
  */
 
+import { canvasParent } from './utils';
+
 //  The game canvas dimensions.
-export const width = 640;
-export const height = 480;
+export const width = canvasParent().offsetWidth;
+export const height = canvasParent().offsetHeight;
 
 //  Choose the rendering method. Available values are:
 //  * WEBGL: Use WebGL rendering;
@@ -16,8 +18,12 @@ export const height = 480;
 //          rendering method to be used.
 export const renderer = Phaser.AUTO;
 
+
 //  Declare the pixel density of the game graphics.
 export const resolution = 1;
+
+//The dom element to put the canvas in
+export const parent = canvasParent().element;
 
 //  Uncomment to disable rendering anti-aliasing. Great for pixel art.
 // export const antialias = false;

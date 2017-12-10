@@ -12,11 +12,11 @@ import 'babel-polyfill';
 import * as config from './config';
 import * as states from './states';
 
+export let game = {};
+export let textureRegistry = {};
 //  Add all required states and boot the game.
 export function init() {
-  const game = new Phaser.Game(config);
-  window.game = game;
-  window.textureRegistry = {};
+  game = new Phaser.Game(config);
 
   Object
     .entries(states)

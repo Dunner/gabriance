@@ -3,63 +3,31 @@
  * ==========
  *
  */
+import StockController from '../controllers/StockController';
+import { testCompany } from '../data/stockQuote';
 
 import Character from '../objects/Character';
+import Camera from '../objects/Camera';
+import { resizeGame, canvasParent } from '../utils';
 
 export default class Game extends Phaser.State {
 
-  populateTeams(teams) {
-    const {centerX} = this.world;
+  create() {
+    this.game.tick=0;
+    this.camera = this.game.camera = this.game.world.camera = new Camera();
+    this.add.tileSprite(0, 0, 1024, 6000, 'bggradient');
+    this.stage.backgroundColor = '#222';
+    this.world.setBounds(0, 0, 1024, 6000);
 
-    return teams.map((team) => {
-      let rooster = [];
-      for (let i = 0 ; i < team.numberOfPlayers; i++) {
-        rooster.push({
-          team: team.name,
-          id: i,
-          object: this.add.existing(
-            new Character(
-              this.game, 
-              centerX+team.centerXOffset, 
-              team.centerYOffset + i*50,
-              team.name
-            ))
-        });
-      }
-      return Object.assign({}, team, {rooster: rooster})
-    })
+    this.StockController = new StockController(testCompany);
+
+    const _char = new Character(512,3000);
+    this.camera.setTarget(_char);
   }
 
-  create() {
-
-    const teamsConfig = [
-      {
-        name: 'blue',
-        numberOfPlayers: 5,
-        centerXOffset: -100,
-        centerYOffset: 80,
-        rooster: []
-      }, 
-      {
-        name: 'green',
-        numberOfPlayers: 5,
-        centerXOffset: 100,
-        centerYOffset: 80,
-        rooster: []
-      }
-    ];
-    let teams = this.populateTeams(teamsConfig);
-    
-
-    setTimeout(function(){
-      for (let i = 0; i < teams.length; i++) {
-        let teamName = teams[i].name;
-        for (let x = 0; x < teams[i].rooster.length; x++) {
-          let player = teams[i].rooster[x];
-          player.object.moveHorizontally(teamName == 'blue' ? -200 : 200);
-        }
-      }
-    },2000)
+  update() {
+    this.game.tick+=1;
+    resizeGame();
   }
 
 }
