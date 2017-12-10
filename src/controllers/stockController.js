@@ -12,12 +12,11 @@ export default class StockController {
     this.createTeams();
     this.createClusters();
     this.mapOrderLevelsToClusters();
-    console.log(this.teams)
   }
 
   calcPriceToPercentage(price) {
     const { startprice } = this.stockQuote;
-    return ((price - startprice) / startprice) * 100
+    return ((price - startprice) / startprice) * 100;
   }
 
   createTeams() {
@@ -25,13 +24,12 @@ export default class StockController {
     this.teamNames.forEach((teamName) => {
       this.teams[teamName] = {
         clusters: []
-      }
-    })
+      };
+    });
   }
 
   calcWorldPosFromPrice(price) {
-    const { startprice } = this.stockQuote;
-    const percentage = this.calcPriceToPercentage(price)
+    const percentage = this.calcPriceToPercentage(price);
     const maxPercentage = 20;
     const middle = game.world.height/2;
     return (game.world.height/2)+(((middle/100)/(maxPercentage/100))*percentage);
@@ -42,12 +40,12 @@ export default class StockController {
     teamNames.forEach((teamName) => {
       for (var i = 0; i < orderLevels; i++) {
         const padding = game.world.width/5;
-        const worldInnerWidth =game.world.width-(padding*2)
+        const worldInnerWidth = game.world.width-(padding*2);
         const sectionWidth = (worldInnerWidth/orderLevels);
         const pos = {
           x: padding + (sectionWidth*i),
           y: 1500
-        }
+        };
         teams[teamName].clusters.push(
           new Cluster(
             teamName,
@@ -55,13 +53,13 @@ export default class StockController {
             pos.x,
             pos.y
           )
-        )
+        );
       }
     });
   }
 
   getCluster(teamName,index) {
-    const {teams, teamNames} = this;
+    const {teams} = this;
     return teams[teamName].clusters[index];
   }
 
@@ -71,12 +69,12 @@ export default class StockController {
     const { orderDepthLevels } = orderbook;
 
     teamNames.forEach((teamName) => {
-      this.addVolumePercentages(orderDepthLevels[teamName])
-      orderDepthLevels[teamName] = this.shuffleTeamLevels(orderDepthLevels[teamName])
+      this.addVolumePercentages(orderDepthLevels[teamName]);
+      orderDepthLevels[teamName] = this.shuffleTeamLevels(orderDepthLevels[teamName]);
       orderDepthLevels[teamName].forEach((object,index) => {
         let cluster = this.getCluster(teamName,index);
-        cluster.setVolume(object.volumePercentage)
-        cluster.setPosY(this.calcWorldPosFromPrice(object.price))
+        cluster.setVolume(object.volumePercentage);
+        cluster.setPosY(this.calcWorldPosFromPrice(object.price));
       });
     });
   }
