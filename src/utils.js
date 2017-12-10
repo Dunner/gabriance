@@ -37,7 +37,7 @@ export function checkOverlap(spriteA, spriteB) {
   var boundsA = spriteA.getBounds();
   var boundsB = spriteB.getBounds();
   return Phaser.Rectangle.intersects(boundsA, boundsB);
-};
+}
 
 export function pointDistance(pointA, pointB) {
   //Returns Distance between two vectors
@@ -48,7 +48,7 @@ export function pointDistance(pointA, pointB) {
 export function pointDirection(object1, object2) {
   // Returns Angle/Direction between two vectors
   return Math.atan2(object2.y - object1.y, object2.x - object1.x) * 180 / Math.PI;
-};
+}
 
 export function lengthDir(length, direction) { //vector, magnitude
   //Returns catheti(legs) when given length & direction(hypothenuse)
@@ -57,7 +57,7 @@ export function lengthDir(length, direction) { //vector, magnitude
     x: length*Math.cos(direction),
     y: length*Math.sin(direction)
   };
-};
+}
 
 export function angle360(angle) {
   //Enusure an angle is within 0-360
@@ -66,7 +66,7 @@ export function angle360(angle) {
     angle360 = Math.abs(angle + 360);
   }
   return angle360;
-};
+}
 
 
 export function shuffleArray(array) {
